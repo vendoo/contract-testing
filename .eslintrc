@@ -1,0 +1,47 @@
+{
+  "root": true,
+  "extends": ["eslint:recommended", "plugin:prettier/recommended"],
+  "plugins": ["@typescript-eslint", "prettier"],
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true,
+    "webextensions": true,
+    "jest": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules": {
+    "prettier/prettier": "error",
+    "semi": ["error", "always"],
+    "quotes": ["error", "double", { "avoidEscape": true }],
+    "no-console": ["warn", { "allow": ["info", "error"] }],
+    "comma-dangle": ["error", "always-multiline"],
+    "max-len": [
+      "error",
+      {
+        "code": 120,
+        "ignoreRegExpLiterals": true,
+        // Ignore long paths length when using "import from ..."
+        "ignorePattern": "^import.*from.*;$",
+        "ignoreUrls": true
+      }
+    ],
+    "require-atomic-updates": "warn",
+    "no-unused-vars": "off",
+    "react/prop-types": 0,
+    "cypress/no-unnecessary-waiting": 0,
+    "react/display-name": ["off"],
+    "no-undef": "off",
+    "no-redeclare": "off",
+    "@typescript-eslint/no-redeclare": ["error", { "ignoreDeclarationMerge": true }],
+    "@typescript-eslint/no-non-null-assertion": ["warn"],
+    "complexity": ["warn", 16]
+  }
+}

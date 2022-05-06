@@ -1,0 +1,17 @@
+{
+  "verbose": true,
+  "preset": "ts-jest",
+  "testEnvironment": "node",
+  "collectCoverage": true,
+  "coverageDirectory": "./coverage",
+  "cacheDirectory": "./.jest-cache",
+  "coverageReporters": ["lcov", "text-summary"],
+  "timers": "modern",
+  "testPathIgnorePatterns": ["/node_modules/"],
+  "coveragePathIgnorePatterns": ["/node_modules/"],
+  "globals": {
+    "ts-jest": {
+      "isolatedModules": true
+    }
+  }
+}

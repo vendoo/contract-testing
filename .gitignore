@@ -1,0 +1,4 @@
+**/.jest-cache
+**/coverage
+**/node_modules
+**/.eslintcache
