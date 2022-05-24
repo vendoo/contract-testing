@@ -14,21 +14,21 @@ export type ContractParams<IT> = {
 
 /** Defines the contract basis */
 export class Contract<
-  K extends string,
-  I extends yup.BaseSchema,
-  IT extends InferType<I>,
-  O extends yup.BaseSchema,
-  OT extends InferType<O>
+  Key extends string,
+  In extends yup.BaseSchema,
+  InType extends InferType<In>,
+  Out extends yup.BaseSchema,
+  OutType extends InferType<Out>
 > implements anyContract {
   constructor(
-    public key: K,
-    public inputSchema: I,
-    public outputSchema: O,
-    public params: ContractParams<IT> = {}
+    public key: Key,
+    public inputSchema: In,
+    public outputSchema: Out,
+    public params: ContractParams<InType> = {}
   ) {}
 
   /** Used internally to create instances immutably */
-  protected decorate(props: ContractParams<IT>) {
+  protected decorate(props: ContractParams<InType>) {
     return new Contract(
       this.key,
       this.inputSchema,
@@ -41,23 +41,23 @@ export class Contract<
     return this.decorate({ onRegister });
   }
 
-  public onBeforeSend(onBeforeSend: ContractParams<IT>["onBeforeSend"]) {
+  public onBeforeSend(onBeforeSend: ContractParams<InType>["onBeforeSend"]) {
     return this.decorate({ onBeforeSend });
   }
 
-  public Input: IT = null as never;
-  public validateInput(input: IT) {
+  public Input: InType = null as never;
+  public validateInput(input: InType) {
     return this.inputSchema.validateSync(input);
   }
 
-  public Output: OT = null as never;
-  public validateOutput(input: OT) {
+  public Output: OutType = null as never;
+  public validateOutput(input: OutType) {
     return this.outputSchema.validateSync(input);
   }
 
-  public responseMock?: OT;
+  public responseMock?: OutType;
   /** This function mutates the contract instance */
-  public mock(responseMock: OT, onRegister?: ContractRegister) {
+  public mock(responseMock: OutType, onRegister?: ContractRegister) {
     this.validateOutput(responseMock);
     this.responseMock = responseMock;
     if (onRegister) this.params.onRegister = onRegister;
@@ -71,7 +71,7 @@ export class Contract<
     if (onRegister) {
       onRegister(thisContract);
     }
-    return async (input: IT): Promise<OT> => {
+    return async (input: InType): Promise<OutType> => {
       input = thisContract.validateInput(input);
 
       const params = onBeforeSend

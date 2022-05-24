@@ -174,14 +174,12 @@ describe("Contract adapters: http use-case", () => {
     sampleSchemaOut
   );
 
-  const sampleAPI = new RuntimeAdapter().add(httpContractSample1);
+  const sampleAPI = new RuntimeAdapter()
+    .add(httpContractSample1)
+    .initialize(httpMock);
 
   httpContractSample1.mock({ outputParam: "outputParam" }, contract => {
     axiosAdapter.onAny("/sample1").reply(200, contract.responseMock);
-  });
-
-  beforeAll(() => {
-    sampleAPI.initialize(httpMock);
   });
 
   beforeEach(() => {
