@@ -1,5 +1,6 @@
 import * as yup from "yup";
 import { ContractAdapter, Contract, Input, Output, RuntimeAdapter } from "..";
+import { registerStub } from "../stub";
 
 import AxiosMockAdapter from "axios-mock-adapter";
 import axios from "axios";
@@ -34,6 +35,15 @@ const sampleContract2 = new Contract(
   sampleSchemaOut,
   sampleSchemaIn
 );
+
+declare module "../stub" {
+  export interface Stub {
+    factory(): jest.Mock;
+  }
+}
+beforeAll(() => {
+  registerStub(jest.fn);
+});
 
 /**
  * Contract testing is the methodology of testing our services isolated
@@ -256,7 +266,7 @@ describe("How to implement a real API client and mock", () => {
     .initialize({
       send: httpProductionAxios.request,
       onError,
-    } as ContractAdapter);
+    });
 
   beforeEach(() => {
     axiosAdapter.reset();
@@ -314,6 +324,7 @@ describe("How to implement a real API client and mock", () => {
   const getItemMock = {
     listing: { sku: "sku" },
   };
+
   // To do that we need to provide mocks for the runtimeAdapter
   // To provide the mock, we select the existing contract and provide the static mock
   productionAPI.contracts.getItem.mock(
@@ -330,6 +341,26 @@ describe("How to implement a real API client and mock", () => {
     await expect(req).resolves.toMatchObject({
       data: getItemMock,
     });
+  });
+
+  test("Mocking the with stubs during integration tests", async () => {
+    productionAPI.contracts.getItem
+      .stub({ listingId: "123" })
+      .mockResolvedValue(getItemMock);
+
+    productionAPI.contracts.getItem
+      .stub({ listingId: "321" })
+      .mockRejectedValue(new Error("400"));
+
+    const req = productionAPI.client.getItem({
+      listingId: "123",
+    });
+    // The call above will resolve to the mock using the axios adapter
+    await expect(req).resolves.toMatchObject(getItemMock);
+
+    const badReq = productionAPI.client.getItem({ listingId: "321" });
+
+    await expect(badReq).rejects.toThrow();
   });
 
   test("Outdated mocks", async () => {
