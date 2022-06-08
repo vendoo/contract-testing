@@ -36,7 +36,7 @@ const sampleContract2 = new Contract(
   sampleSchemaIn
 );
 
-declare module "../stub" {
+declare global {
   export interface Stub {
     factory(): jest.Mock;
   }

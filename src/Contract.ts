@@ -3,7 +3,7 @@ import isMatch from "lodash/isMatch";
 import { InferType } from "./utils/yup";
 import { anyContract } from "./common";
 import { ContractAdapter } from "./adapters/common";
-import { getStub, Stub } from "./stub";
+import { getStub, StubType } from "./stub";
 
 export type ContractRegister<T extends anyContract = anyContract> = (
   contract: T
@@ -68,7 +68,7 @@ export class Contract<
   }
 
   private matchSources: Partial<InType>[] = [];
-  private stubs = new WeakMap<{}, ReturnType<Stub["factory"]>>();
+  private stubs = new WeakMap<{}, StubType>();
 
   /** This function mutates the contract instance */
   public stub(source: Partial<InType> = {}) {
