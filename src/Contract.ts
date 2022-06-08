@@ -68,7 +68,7 @@ export class Contract<
   }
 
   private matchSources: Partial<InType>[] = [];
-  private stubs = new WeakMap<{}, any>();
+  private stubs = new WeakMap<{}, ReturnType<Stub["factory"]>>();
 
   /** This function mutates the contract instance */
   public stub(source: Partial<InType> = {}) {
