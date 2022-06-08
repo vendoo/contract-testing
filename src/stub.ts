@@ -2,13 +2,17 @@ declare module "./stub" {
   export interface Stub {}
 }
 
-const stub: Stub = { factory: null as never };
+const stub: Stub = {} as Stub;
 
+/**
+ * Ignoring the stub type here because we want to allow module augmentation
+ * for the factory result
+ */
 export const getStub = () => {
-  if (!stub.factory) throw new Error("No stub registered.");
-  return stub.factory();
+  if (!(stub as any).factory) throw new Error("No stub registered.");
+  return (stub as any).factory();
 };
 
 export const registerStub = (factory: Stub["factory"]) => {
-  stub.factory = factory;
+  (stub as any).factory = factory;
 };
