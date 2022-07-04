@@ -1,6 +1,5 @@
 import yup from "yup";
 import isMatch from "lodash/isMatch";
-import { InferType } from "./utils/yup";
 import { anyContract } from "./common";
 import { ContractAdapter } from "./adapters/common";
 import { getStub, StubType } from "./stub";
@@ -18,9 +17,9 @@ export type ContractParams<IT> = {
 export class Contract<
   Key extends string,
   In extends yup.Schema,
-  InType extends InferType<In>,
+  InType extends yup.InferType<In>,
   Out extends yup.Schema,
-  OutType extends InferType<Out>
+  OutType extends yup.InferType<Out>
 > implements anyContract {
   constructor(
     public key: Key,

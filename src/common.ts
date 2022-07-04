@@ -1,13 +1,12 @@
 import yup from "yup";
-import { InferType } from "./utils/yup";
 import { ContractAdapter } from "./adapters/common";
 
 export interface anyContract<
   K = string,
   I extends yup.Schema = yup.Schema,
-  IT = InferType<I>,
+  IT = yup.InferType<I>,
   O extends yup.Schema = yup.Schema,
-  OT = InferType<O>
+  OT = yup.InferType<O>
 > {
   key: K;
 
