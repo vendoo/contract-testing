@@ -17,9 +17,9 @@ export type ContractParams<IT> = {
 /** Defines the contract basis */
 export class Contract<
   Key extends string,
-  In extends yup.BaseSchema,
+  In extends yup.Schema,
   InType extends InferType<In>,
-  Out extends yup.BaseSchema,
+  Out extends yup.Schema,
   OutType extends InferType<Out>
 > implements anyContract {
   constructor(

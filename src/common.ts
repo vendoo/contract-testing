@@ -4,9 +4,9 @@ import { ContractAdapter } from "./adapters/common";
 
 export interface anyContract<
   K = string,
-  I extends yup.BaseSchema = yup.BaseSchema,
+  I extends yup.Schema = yup.Schema,
   IT = InferType<I>,
-  O extends yup.BaseSchema = yup.BaseSchema,
+  O extends yup.Schema = yup.Schema,
   OT = InferType<O>
 > {
   key: K;
