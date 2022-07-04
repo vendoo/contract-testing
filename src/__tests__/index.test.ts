@@ -352,14 +352,11 @@ describe("How to implement a real API client and mock", () => {
       .stub({ listingId: "321" })
       .mockRejectedValue(new Error("400"));
 
-    const req = productionAPI.client.getItem({
-      listingId: "123",
-    });
+    const req = productionAPI.client.getItem({ listingId: "123" });
     // The call above will resolve to the mock using the axios adapter
     await expect(req).resolves.toMatchObject(getItemMock);
 
     const badReq = productionAPI.client.getItem({ listingId: "321" });
-
     await expect(badReq).rejects.toThrow();
   });
 
