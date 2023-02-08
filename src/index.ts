@@ -1,15 +1,9 @@
-import { Contract } from "./Contract";
-import { Input, Output } from "./common";
-import { ContractAdapter } from "./adapters/common";
-import { RuntimeAdapter } from "./adapters/RuntimeAdapter";
-import { getStub, registerStub } from "./stub";
+// ignoring prettier since out version is not compatible with latest typescript
 
-export {
-  getStub,
-  registerStub,
-  Contract,
-  ContractAdapter,
-  RuntimeAdapter,
-  Input,
-  Output,
-};
+export { Contract } from "./Contract";
+// eslint-disable-next-line prettier/prettier
+export type { Input, Output } from "./common";
+// eslint-disable-next-line prettier/prettier
+export type { ContractAdapter } from "./adapters/common";
+export { RuntimeAdapter } from "./adapters/RuntimeAdapter";
+export { getStub, registerStub } from "./stub";
