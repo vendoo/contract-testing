@@ -1,6 +1,6 @@
 {
   "name": "@vendoo/contract-testing",
-  "version": "0.0.1",
+  "version": "0.0.4",
   "description": "Contract Testing made easy",
   "main": "src/index.ts",
   "repository": "git@github.com:vendoo/contract-testing.git",
